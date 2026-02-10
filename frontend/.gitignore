@@ -1,0 +1,25 @@
+# Node.js dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Frontend build artifacts
+dist/
+frontend/dist/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Logs
+logs/
+*.log
+
+# Coverage
+coverage/
+
+# Build output
+build/
