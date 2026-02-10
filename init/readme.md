@@ -97,7 +97,7 @@
 
 - **Table**:
 | Name        | Relationship |
-|-------------|--------------|
+| ----------- | ------------ |
 | (editable)  | (editable)   |
 
 - **Other relevant Information**: Multiline textbox
@@ -112,9 +112,9 @@
 ### Part 3: Comments
 - **Refresh** button → reloads comment table
 - **Table**:
-| Description | Created by | Action Date |
-|-------------|------------|-------------|
-| ...         | ...        | ...         |
+ | Description | Created by | Action Date |
+ | ----------- | ---------- | ----------- |
+ | ...         | ...        | ...         |
 
 - Double-click row → popup showing reason/comment with Close button
 
