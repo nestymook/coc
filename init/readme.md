@@ -1,11 +1,13 @@
 # Web UI Specification for Declaration of Relationship Form System
 
 ## User Roles
+
 - **RA** — Relevant Authority
 - **AA** — Approving Authority
 - **RS** — Reporting Staff
 
 ## Form Statuses
+
 - Draft
 - Processing
 - Returned
@@ -15,7 +17,6 @@
 
 **Description**: The login page and landing page after successful actions.
 
-### Layout
 - **Left (Minority Width)**: Tree view (shown based on user's "View Records" permission)
   - **For RS** — Basic functions
     - **My Forms**
@@ -73,7 +74,6 @@
 
 **Description**: Page for RS to create new forms or edit forms in **Draft** status.
 
-### Layout
 - **Left**: Same tree as Index page
 - **Right**:
   - **Top**: Action buttons
@@ -90,14 +90,16 @@
     - Return to Index page
 
 - **Form Content** (on load):
+
 ### Part 1: Introduction
 
 ### Part 2: Declaration of Relationship
+
 - Text: *I hereby declare the following is my family members*
 
 - **Table**:
 | Name        | Relationship |
-| ----------- | ------------ |
+| :---------- | :----------- |
 | (editable)  | (editable)   |
 
 - **Other relevant Information**: Multiline textbox
@@ -110,10 +112,11 @@
 *I hereby declare that the information entered above and supporting documents provided (if any) are true, accurate and complete.*
 
 ### Part 3: Comments
+
 - **Refresh** button → reloads comment table
 - **Table**:
  | Description | Created by | Action Date |
- | ----------- | ---------- | ----------- |
+ | :---------- | :--------- | :---------- |
  | ...         | ...        | ...         |
 
 - Double-click row → popup showing reason/comment with Close button
