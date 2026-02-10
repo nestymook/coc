@@ -1,216 +1,163 @@
-Create a web ui with the following user interface
+# Web UI Specification for Declaration of Relationship Form System
 
+## User Roles
+- **RA** — Relevant Authority
+- **AA** — Approving Authority
+- **RS** — Reporting Staff
 
-Roles:
+## Form Statuses
+- Draft
+- Processing
+- Returned
+- Completed
 
-RA
-AA
-RS
+## 1. Index Page (Login / Main Dashboard)
 
-Form Status:
-Draft
-Processing
-Returned
-Completed
+**Description**: The login page and landing page after successful actions.
 
-1. Index page
-	Description: The login page where the user first login and after any successful actions.
-    Left (Minority Width\): a tree that including the folloiwing items, according to whether this user can "View Records":
-		(For RS) Basic functions
-		Top node: My Forms
-		    Sub node: Draft
-			Sub node: Processing
-			Sub node: Returned
-			Sub node: Completed
-		Top node: For My Action
-			Sub node: Processing
-				Sub Sub node: By Month
-				Sub Sub node: By Department
-				Sub Sub node: By Form
-			Sub node: Completed
-				Sub node: By Month
-				Sub node: By Department
-				Sub node: By Form	
-		(For RA and AA) Audit Trail Function and Erasure Function
-	Right (Majority Width)
-		Top (Minority Height):  Display buttons available for action
-			Button: New Form
-				Event: After click the button, a list of Forms selectable for the RS is listed for highlight and mouse click for selection
-					Click Event: Go to Create new form page
-		Bottom (Rest of the height): 
-			If check My Forms sub nodes, display the following table:
-				Table: with given Form Status for the current user
-					Column: Status (String)
-					Column: Code (String)
-					Column: Title (String)
-					Column: Date of Submission (Date)
-					Column: Date of Last Action (Date)
-					Event: If double click any records, display corresponding pages depending on the Form Status
-					Event: If click the header once, will be sorted ASC, click again then sorted DESC
-			If check **"For My Action"** --> **"Processing"** or **"Completed"** sub nodes, display the following table:
-				Table: with given Form Status for the current user
-					Column: Department (String)
-					Column: Staff Name (String)
-					Column: Status (String)
-					Column: Form (String)
-					Column: Title (String)
-					Column: Date of Submission (Date)
-					Column: Date of Last Action (Date)
-					Event: If double click any records, display corresponding pages depending on the Form Status
-					Sorting Order: depends on user select "By Department", "By Month", "By Form"
-						"By Department" sort by and group by department code
-						"By Month": sort by and group by Year + Month of the submission date
-						"By Form": sort by and group by form type
-2. Create new form page / draft page
-	Description: The page where the RS user create new forms or Form Status "Draft"
-	Left (Minority Width): a tree that including the following items, according to whether this user can "View Records" as in Index Page
-	Right (Majority Width)
-		Top (Minority Height):  Display buttons available for action
-			Button: Save as Draft
-				Event: After click the button, save the filled information as draft (Status: Draft), display "Save." if complete.
-			Button: Submit
-				Event: Display a "Do you confirm the submission?" message, if Yes, save and submit this creation (Status: Processing). If save success, display message "Submitted!\n Responsibile Relavant Authority: <User Name> [<Position>]\n Responsibile Approving Authority: <User Name> [<Position>]". The form is submitted to RA.
-			Button: Close
-				Event: Cancel and delete this creation, and then go back to Index Page
-			On Load: Load the predefined form details
-				Declaration of Relationship Form as follows:
-				Part 1: Introduction
-				Part 2: Declaration of Relationship
-					Text: I hereby declare the following is my family members
-					Table:
-						Column: Name (String)
-						Column: Relationship (String)
-					Textbox: Other relevant Information (Multiline text box)
-					Button: Attach (if applicable)
-						Event: Open a file upload window for upload files. Upon successful upload, show the hyperlink for download
-					Checkbox: I hereby declare that the information entered above and supporting documents provided (if any) are true, accurate and complete.
-				Part 3: Comments
-					Button: Display buttons available for action
-						Refresh: 
-							Event: Reload the table with user comments
-					Table: 
-						Column: Description (Text)
-						Column: Created by (Text)
-						Column: Action Date (Date)
-						Event: On double click the record, popup a message box to show the reason for resubmission with close button
-					On Load: Load the data with any comments given by RA for the reason for resubmission
-						
+### Layout
+- **Left (Minority Width)**: Tree view (shown based on user's "View Records" permission)
+  - **For RS** — Basic functions
+    - **My Forms**
+      - Draft
+      - Processing
+      - Returned
+      - Completed
+    - **For My Action**
+      - **Processing**
+        - By Month
+        - By Department
+        - By Form
+      - **Completed**
+        - By Month
+        - By Department
+        - By Form
+  - **For RA and AA** — Audit Trail Function and Erasure Function
 
-					
-					
-3. Resubmission Form Page
-	Description: The page where user double clicked form with Form Status "Returned"
-	Left (Minority Width): a tree that including the following items, according to whether this user can "View Records" as in Index Page
-	Right (Majority Width)
-		Top (Minority Height):  Display buttons available for action
-			Resubmit: Re-submit the form
-				Event: Display a "Do you confirm the re-submission?" message, if Yes, save and submit this creation (Status: Processing). If save success, display message "Re-submitted!\n Responsibile Relavant Authority: <User Name> [<Position>]\n Responsibile Approving Authority: <User Name> [<Position>]". The form is submitted to RA.
-			Button: Close
-				Event: Go back to Index Page with no change
-			On Load: Load the predefined form details
-				Declaration of Relationship Form as follows:
-				Part 1: Introduction
-				Part 2: Declaration of Relationship
-					Text: I hereby declare the following is my family members
-					Table:
-					Column: Name (String)
-					Column: Relationship (String)
-					Textbox: Other relevant Information (Multiline text box)
-					Button: Attach (if applicable)
-						Event: Open a file upload window for upload files. Upon successful upload, show the hyperlink for download
-					Checkbox: I hereby declare that the information entered above and supporting documents provided (if any) are true, accurate and complete.
-				Part 3: Comments
-					Button: Display buttons available for action
-						Refresh: 
-							Event: Reload the table with user comments
-					Table: 
-						Column: Description (Text)
-							For returned forms (Forms Status "Returned"), there will be a record with description returned
-							For reviewed forms (Forms Status "Completed"), there will be a record with description instructions
-							For rejected forms (Forms Status "Returned"), there will be a record with description rejected
-						Column: Created by (Text)
-						Column: Action Date (Date)
-						Event: On double click the record, popup a message box to show the reason for resubmission with close button
-					On Load: Load the data with any comments given by RA for the reason for resubmission
+- **Right (Majority Width)**
+  - **Top (Minority Height)**: Action buttons
+    - **New Form** button
+      - On click: Displays a list of selectable form types
+      - Selection → navigates to **Create new form page**
+  - **Bottom (Majority Height)**: Main content area
+    - When selecting **My Forms** sub-nodes → show table filtered by selected status
+      **Table columns**:
+      - Status (String)
+      - Code (String)
+      - Title (String)
+      - Date of Submission (Date)
+      - Date of Last Action (Date)
 
-4. Completed Forms Page
-	Description: The page where user double clicked form with Form Status "Completed"
-	Left (Minority Width): a tree that including the following items, according to whether this user can "View Records" as in Index Page
-	Right (Majority Width)
-		Top (Minority Height):  Display buttons available for action
-			Resubmit: Re-submit the form
-				Event: Display a "Do you confirm the re-submission?" message, if Yes, save and submit this creation (Status: Processing). If save success, display message "Re-submitted!\n Responsibile Relavant Authority: <User Name> [<Position>]\n Responsibile Approving Authority: <User Name> [<Position>]". The form is submitted to RA.
-			Button: Close
-				Event: Go back to Index Page with no change
-			On Load: Load the predefined form details
-				Declaration of Relationship Form as follows:
-				Part 1: Introduction
-				Part 2: Declaration of Relationship
-					Text: I hereby declare the following is my family members
-					Table:
-					Column: Name (String)
-					Column: Relationship (String)
-					Textbox: Other relevant Information (Multiline text box)
-					Button: Attach (if applicable)
-						Event: Open a file upload window for upload files. Upon successful upload, show the hyperlink for download
-					Checkbox: I hereby declare that the information entered above and supporting documents provided (if any) are true, accurate and complete.
-				Part 3: Comments
-					Button: Display buttons available for action
-						Refresh: 
-							Event: Reload the table with user comments
-					Table: 
-						Column: Description (Text)
-							For reviewed forms (Forms Status "Completed"), there will be a record with description instructions
-							For rejected forms (Forms Status "Returned"), there will be a record with description rejected
-						Column: Created by (Text)
-						Column: Action Date (Date)
-						Event: On double click the record, popup a message box to show the reason for completion with close button
-					On Load: Load the data with any comments given by RA for the reason for completion
-					
-4. Processing Forms Page
-	Description: The page where user double clicked form with Form Status "Processing"
-	Left (Minority Width): a tree that including the following items, according to whether this user can "View Records" as in Index Page
-	Right (Majority Width)
-		Top (Minority Height):  Display buttons available for action
-			Return for Resubmission: Return the form to RS with reason (for RA only and the form is not recommended)
-				Event: Display a dialog box for input return reason. 
-					Dialog box: Return reason (multiline text). If previously entered the reason, display the text.
-						Button: Return to reporting staff
-							Event: save and return this creation (Status: Processing). If reason, display message "Do you confirm?". The form is submitted to RS. Close the dialog box.
-							Event: after the returned
-						Button: Save as Draft
-							Event: just save the text for next time display. Close the dialog box.
-						Button: Cancel
-							Event: Close the dialog box without save the text
-			Recommended: Pass the form to AA with reason (for RA only and the form is not recommended)
-				Event: Display a "Confirm recommend?" message, if Yes, display a message box with multiline text box for input the reason, save and return this creation (Status: Processing and mark is recommended). If save success, display message "Recommended!". The form is submitted to RS.
-			Resubmit Recommended: Pass the form to AA with reason (for RA only and the form is not recommended but has returned)
-				Event: Display a "Confirm resubmit recommend?" message, if Yes, save and return this creation (Status: Processing and mark is recommended and clear returned). If save success, display message "Resubmit Recommended!". The form is submitted to RS.
-			Button: Close
-				Event: Go back to Index Page with no change
-			On Load: Load the predefined form details
-				Declaration of Relationship Form as follows:
-				Part 1: Introduction
-				Part 2: Declaration of Relationship
-					Text: I hereby declare the following is my family members
-					Table:
-					Column: Name (String)
-					Column: Relationship (String)
-					Textbox: Other relevant Information (Multiline text box)
-					Button: Attach (if applicable)
-						Event: Open a file upload window for upload files. Upon successful upload, show the hyperlink for download
-					Checkbox: I hereby declare that the information entered above and supporting documents provided (if any) are true, accurate and complete.
-				Part 3: Comments
-					Button: Display buttons available for action
-						Refresh: 
-							Event: Reload the table with user comments
-					Table: 
-						Column: Description (Text)
-							For reviewed forms (Forms Status "Completed"), there will be a record with description instructions
-							For rejected forms (Forms Status "Returned"), there will be a record with description rejected
-						Column: Created by (Text)
-						Column: Action Date (Date)
-						Event: On double click the record, popup a message box to show the reason for completion with close button
-					On Load: Load the data with any comments given by RA for the reason for completion
-	
-??? How RA can return the form?
+      **Events**:
+      - Double-click row → open corresponding form view/edit page (based on status)
+      - Click column header → toggle sort (ASC → DESC → ASC)
+
+    - When selecting **For My Action → Processing** or **Completed** sub-nodes → show table
+      **Table columns**:
+      - Department (String)
+      - Staff Name (String)
+      - Status (String)
+      - Form (String)
+      - Title (String)
+      - Date of Submission (Date)
+      - Date of Last Action (Date)
+
+      **Events**:
+      - Double-click row → open form view/edit
+      - Sorting / Grouping depends on sub-node:
+        - **By Department**: group & sort by department code
+        - **By Month**: group & sort by Year + Month of submission date
+        - **By Form**: group & sort by form type
+
+## 2. Create New Form / Draft Page
+
+**Description**: Page for RS to create new forms or edit forms in **Draft** status.
+
+### Layout
+- **Left**: Same tree as Index page
+- **Right**:
+  - **Top**: Action buttons
+    - **Save as Draft**
+      - Saves current data as Draft
+      - Shows "Save." message on success
+    - **Submit**
+      - Confirmation: "Do you confirm the submission?"
+      - On Yes: Submit form (Status → **Processing**)
+      - Success message:
+	  - Form routed to RA
+	- **Close**
+	  - Cancel and delete draft
+    - Return to Index page
+
+- **Form Content** (on load):
+### Part 1: Introduction
+
+### Part 2: Declaration of Relationship
+- Text: *I hereby declare the following is my family members*
+
+- **Table**:
+| Name        | Relationship |
+|-------------|--------------|
+| (editable)  | (editable)   |
+
+- **Other relevant Information**: Multiline textbox
+
+- **Attach** button
+- Opens file upload dialog
+- On success: shows downloadable hyperlink
+
+- **Checkbox**:  
+*I hereby declare that the information entered above and supporting documents provided (if any) are true, accurate and complete.*
+
+### Part 3: Comments
+- **Refresh** button → reloads comment table
+- **Table**:
+| Description | Created by | Action Date |
+|-------------|------------|-------------|
+| ...         | ...        | ...         |
+
+- Double-click row → popup showing reason/comment with Close button
+
+- On load: show any existing RA comments (for returned forms)
+
+## 3. Resubmission Form Page
+
+**Description**: Opened when double-clicking a **Returned** form.
+
+- Same layout as Create/Draft page
+- **Top buttons**:
+- **Resubmit**
+- Confirmation: "Do you confirm the re-submission?"
+- On Yes → Status → **Processing**
+- Success message similar to Submit
+- **Close** → back to Index (no changes)
+
+- Form content identical to Create page
+- Comments section shows return reason(s) from RA
+
+## 4. Completed Forms Page
+
+**Description**: Opened when double-clicking a **Completed** form.
+
+- Same layout
+- **Top buttons**:
+- **Resubmit** (optional / conditional)
+- **Close**
+
+- Shows read-only form + comments (usually "instructions" type entries)
+
+## 5. Processing Forms Page
+
+**Description**: Opened when double-clicking a **Processing** form (mainly for RA/AA).
+
+- Same layout
+- **Top buttons** (RA-specific):
+- **Return for Resubmission** (for non-recommended forms)
+- Opens dialog:
+- Multiline "Return reason"
+- Buttons: **Return to reporting staff** | **Save as Draft** | **Cancel**
+- **Recommended** — pass to AA with comment
+- **Resubmit Recommended** — for previously returned but now re-recommending
+- **Close**
+
+- Form view + comments section
