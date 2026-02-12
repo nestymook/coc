@@ -111,8 +111,9 @@ public class FileUploadController {
                 return ResponseEntity.notFound().build();
             }
             
-            // Read file
-            Path filePath = Paths.get(fileUploadConfig.getUploadDir() + attachment.getPath().substring("/uploads".length()));
+            // Read file - extract the unique filename from the path
+            String uniqueFilename = attachment.getPath().substring("/uploads/".length());
+            Path filePath = Paths.get(fileUploadConfig.getUploadDirectory().getAbsolutePath(), uniqueFilename);
             byte[] fileContent = Files.readAllBytes(filePath);
             
             return ResponseEntity.ok()

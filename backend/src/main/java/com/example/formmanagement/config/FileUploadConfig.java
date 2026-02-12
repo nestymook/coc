@@ -1,6 +1,7 @@
 package com.example.formmanagement.config;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -15,9 +16,13 @@ public class FileUploadConfig implements WebMvcConfigurer {
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String uploadDirPath = new File(uploadDir).getAbsolutePath();
-        registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:" + uploadDirPath + "/");
+        try {
+            String uploadDirPath = new File(uploadDir).getCanonicalPath();
+            registry.addResourceHandler("/uploads/**")
+                    .addResourceLocations("file:" + uploadDirPath + "/");
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to configure file upload directory", e);
+        }
     }
     
     public String getUploadDir() {
